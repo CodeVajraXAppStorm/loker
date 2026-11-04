@@ -1,547 +1,386 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-  />
-
-  <meta name="theme-color" content="#080b12" />
-
-  <title>VaultX - Personal Document Locker</title>
-
-  <link rel="stylesheet" href="/style.css" />
+<meta charset="UTF-8" />
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+/>
+<meta name="theme-color" content="#080b12" />
+<title>VaultX - Personal Document Locker</title>
+<link rel="stylesheet" href="/style.css" />
 </head>
 
 <body>
 
-  <!-- APP LOCK SCREEN -->
-  <section id="lockScreen" class="lock-screen">
-
-    <div class="lock-glow"></div>
-
-    <div class="lock-content">
-
-      <div class="vault-logo">
-        <div class="vault-logo-inner">
-          <svg viewBox="0 0 24 24" fill="none">
-            <rect x="4" y="3" width="16" height="18" rx="4"
-              stroke="currentColor" stroke-width="1.7"/>
-
-            <path d="M8 10V8.5a4 4 0 0 1 8 0V10"
-              stroke="currentColor" stroke-width="1.7"
-              stroke-linecap="round"/>
-
-            <rect x="7" y="10" width="10" height="7" rx="2"
-              stroke="currentColor" stroke-width="1.7"/>
-
-            <circle cx="12" cy="13.5" r="1"
-              fill="currentColor"/>
-          </svg>
-        </div>
-      </div>
-
-      <h1>Vault<span>X</span></h1>
-
-      <p class="lock-subtitle">
-        YOUR PERSONAL DOCUMENT VAULT
-      </p>
-
-      <div class="lock-card">
-
-        <div id="pinHeading" class="lock-card-title">
-          Create your PIN
-        </div>
-
-        <p id="pinDescription" class="lock-description">
-          Create a 4-digit PIN to secure your documents.
-        </p>
-
-        <div class="pin-dots" id="pinDots">
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-
-        <div class="pin-keypad">
-
-          <button class="pin-key" data-key="1">1</button>
-          <button class="pin-key" data-key="2">2</button>
-          <button class="pin-key" data-key="3">3</button>
-
-          <button class="pin-key" data-key="4">4</button>
-          <button class="pin-key" data-key="5">5</button>
-          <button class="pin-key" data-key="6">6</button>
-
-          <button class="pin-key" data-key="7">7</button>
-          <button class="pin-key" data-key="8">8</button>
-          <button class="pin-key" data-key="9">9</button>
-
-          <button class="pin-key pin-empty" disabled></button>
-          <button class="pin-key" data-key="0">0</button>
-          <button class="pin-key pin-delete" data-key="delete">
-            ⌫
-          </button>
-
-        </div>
-
-        <button id="fingerprintBtn" class="fingerprint-btn">
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="M12 11v3"
-              stroke="currentColor" stroke-width="1.8"
-              stroke-linecap="round"/>
-
-            <path d="M8.5 13.5V11a3.5 3.5 0 0 1 7 0v3"
-              stroke="currentColor" stroke-width="1.8"
-              stroke-linecap="round"/>
-
-            <path d="M5.5 12a6.5 6.5 0 0 1 13 0v2"
-              stroke="currentColor" stroke-width="1.8"
-              stroke-linecap="round"/>
-
-            <path d="M12 17v3"
-              stroke="currentColor" stroke-width="1.8"
-              stroke-linecap="round"/>
-
-            <path d="M8 17c0 1.5-.5 2.5-1 3"
-              stroke="currentColor" stroke-width="1.8"
-              stroke-linecap="round"/>
-          </svg>
-
-          <span>Fingerprint unlock</span>
-        </button>
-
-        <p id="pinMessage" class="pin-message"></p>
-
-      </div>
-
-      <p class="lock-footer">
-        PRIVATE • OFFLINE • SECURE
-      </p>
-
-    </div>
-  </section>
-
-
-  <!-- MAIN APP -->
-  <main id="mainApp" class="main-app hidden">
-
-    <!-- HEADER -->
-    <header class="app-header">
-
-      <div class="brand">
-
-        <div class="brand-icon">
-          <svg viewBox="0 0 24 24" fill="none">
-            <rect x="4" y="3" width="16" height="18" rx="4"
-              stroke="currentColor" stroke-width="1.7"/>
-
-            <path d="M8 10V8.5a4 4 0 0 1 8 0V10"
-              stroke="currentColor" stroke-width="1.7"
-              stroke-linecap="round"/>
-
-            <rect x="7" y="10" width="10" height="7" rx="2"
-              stroke="currentColor" stroke-width="1.7"/>
-          </svg>
-        </div>
-
-        <div>
-          <h1>Vault<span>X</span></h1>
-          <p>Personal Document Locker</p>
-        </div>
-
-      </div>
-
-      <button id="lockBtn" class="icon-btn" aria-label="Lock app">
-        <svg viewBox="0 0 24 24" fill="none">
-          <rect x="5" y="10" width="14" height="11" rx="3"
-            stroke="currentColor" stroke-width="1.7"/>
-
-          <path d="M8 10V7a4 4 0 0 1 8 0v3"
-            stroke="currentColor" stroke-width="1.7"
-            stroke-linecap="round"/>
-        </svg>
-      </button>
-
-    </header>
-
-
-    <!-- WELCOME -->
-    <section class="welcome-section">
-
-      <div>
-        <p class="eyebrow">YOUR PRIVATE SPACE</p>
-
-        <h2>
-          Your documents.<br />
-          <span>Your control.</span>
-        </h2>
-
-        <p class="welcome-description">
-          Keep your important documents organized in one place.
-        </p>
-      </div>
-
-      <div class="security-badge">
-        <div class="security-dot"></div>
-        <span>Offline Vault</span>
-      </div>
-
-    </section>
-
-
-    <!-- SEARCH -->
-    <section class="search-section">
-
-      <div class="search-box">
-
-        <svg viewBox="0 0 24 24" fill="none">
-          <circle cx="11" cy="11" r="7"
-            stroke="currentColor" stroke-width="1.7"/>
-
-          <path d="m16 16 4 4"
-            stroke="currentColor" stroke-width="1.7"
-            stroke-linecap="round"/>
-        </svg>
-
-        <input
-          type="search"
-          id="searchInput"
-          placeholder="Search your documents..."
-          autocomplete="off"
-        />
-
-      </div>
-
-    </section>
-
-
-    <!-- CATEGORIES -->
-    <section class="categories-section">
-
-      <div class="section-heading">
-        <h3>Categories</h3>
-        <span id="categoryCount">5 categories</span>
-      </div>
-
-      <div class="category-grid">
-
-        <button class="category-card active" data-category="All">
-
-          <div class="category-icon all-icon">
-            <span>▦</span>
-          </div>
-
-          <span>All</span>
-          <small id="allCount">0</small>
-
-        </button>
-
-        <button class="category-card" data-category="Identity">
-
-          <div class="category-icon identity-icon">
-            <span>▣</span>
-          </div>
-
-          <span>Identity</span>
-          <small id="identityCount">0</small>
-
-        </button>
-
-        <button class="category-card" data-category="Finance">
-
-          <div class="category-icon finance-icon">
-            <span>₹</span>
-          </div>
-
-          <span>Finance</span>
-          <small id="financeCount">0</small>
-
-        </button>
-
-        <button class="category-card" data-category="Education">
-
-          <div class="category-icon education-icon">
-            <span>▤</span>
-          </div>
-
-          <span>Education</span>
-          <small id="educationCount">0</small>
-
-        </button>
-
-        <button class="category-card" data-category="Other">
-
-          <div class="category-icon other-icon">
-            <span>▧</span>
-          </div>
-
-          <span>Other</span>
-          <small id="otherCount">0</small>
-
-        </button>
-
-      </div>
-
-    </section>
-
-
-    <!-- DOCUMENTS -->
-    <section class="documents-section">
-
-      <div class="section-heading">
-
-        <div>
-          <h3 id="documentsHeading">My Documents</h3>
-
-          <p id="documentsSubheading">
-            Your important files in one place
-          </p>
-        </div>
-
-        <button id="sortBtn" class="sort-btn">
-          Recent ↓
-        </button>
-
-      </div>
-
-      <div id="documentGrid" class="document-grid"></div>
-
-      <div id="emptyState" class="empty-state">
-
-        <div class="empty-icon">▤</div>
-
-        <h3>No documents yet</h3>
-
-        <p>
-          Add your first document to start building your personal vault.
-        </p>
-
-        <button id="emptyAddBtn" class="primary-btn">
-          + Add Document
-        </button>
-
-      </div>
-
-    </section>
-
-
-    <!-- BOTTOM NAVIGATION -->
-    <nav class="bottom-nav">
-
-      <button class="nav-item active" data-page="home">
-        <span class="nav-icon">⌂</span>
-        <span>Home</span>
-      </button>
-
-      <button class="nav-item" id="allDocumentsBtn">
-        <span class="nav-icon">▤</span>
-        <span>Documents</span>
-      </button>
-
-      <button class="nav-item" id="settingsBtn">
-        <span class="nav-icon">⚙</span>
-        <span>Settings</span>
-      </button>
-
-    </nav>
-
-  </main>
-
-
-  <!-- ADD DOCUMENT MODAL -->
-  <div id="addModal" class="modal hidden">
-
-    <div class="modal-backdrop" data-close="addModal"></div>
-
-    <div class="modal-card">
-
-      <div class="modal-header">
-
-        <div>
-          <h2>Add Document</h2>
-          <p>Choose a file from your device.</p>
-        </div>
-
-        <button class="modal-close" data-close="addModal">
-          ×
-        </button>
-
-      </div>
-
-      <label class="form-label" for="documentName">
-        Document Name
-      </label>
-
-      <input
-        id="documentName"
-        class="form-input"
-        type="text"
-        placeholder="e.g. Aadhaar Card"
-        maxlength="100"
-      />
-
-      <label class="form-label" for="documentCategory">
-        Category
-      </label>
-
-      <select id="documentCategory" class="form-input">
-
-        <option value="Identity">Identity</option>
-        <option value="Finance">Finance</option>
-        <option value="Education">Education</option>
-        <option value="Other">Other</option>
-
-      </select>
-
-      <label class="form-label" for="documentExpiry">
-        Expiry Date (Optional)
-      </label>
-
-      <input
-        id="documentExpiry"
-        class="form-input"
-        type="date"
-      />
-
-      <label class="file-picker">
-
-        <input
-          type="file"
-          id="documentFile"
-          accept="image/*,.pdf"
-        />
-
-        <span class="file-picker-icon">＋</span>
-
-        <span id="filePickerText">
-          Choose PDF or Image
-        </span>
-
-      </label>
-
-      <button id="saveDocumentBtn" class="primary-btn">
-        Save Document
-      </button>
-
-      <p id="addDocumentMessage" class="form-message"></p>
-
-    </div>
-
-  </div>
-
-
-  <!-- DOCUMENT PREVIEW MODAL -->
-  <div id="previewModal" class="modal hidden">
-
-    <div class="modal-backdrop" data-close="previewModal"></div>
-
-    <div class="modal-card preview-card">
-
-      <div class="modal-header">
-
-        <div>
-          <h2 id="previewTitle">Document</h2>
-          <p id="previewInfo"></p>
-        </div>
-
-        <button class="modal-close" data-close="previewModal">
-          ×
-        </button>
-
-      </div>
-
-      <div id="previewContent" class="preview-content"></div>
-
-      <div class="preview-actions">
-
-        <button id="downloadDocumentBtn" class="secondary-btn">
-          Download
-        </button>
-
-        <button id="deleteDocumentBtn" class="danger-btn">
-          Delete
-        </button>
-
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <!-- SETTINGS MODAL -->
-  <div id="settingsModal" class="modal hidden">
-
-    <div class="modal-backdrop" data-close="settingsModal"></div>
-
-    <div class="modal-card">
-
-      <div class="modal-header">
-
-        <div>
-          <h2>Settings</h2>
-          <p>Manage your personal vault.</p>
-        </div>
-
-        <button class="modal-close" data-close="settingsModal">
-          ×
-        </button>
-
-      </div>
-
-      <div class="settings-row">
-
-        <div>
-          <strong>Offline Storage</strong>
-          <p>Your files stay on this device.</p>
-        </div>
-
-        <span class="settings-status">ON</span>
-
-      </div>
-
-      <div class="settings-row">
-
-        <div>
-          <strong>PIN Security</strong>
-          <p>Change your vault PIN.</p>
-        </div>
-
-        <button id="changePinBtn" class="secondary-btn">
-          Change PIN
-        </button>
-
-      </div>
-
-      <div class="settings-row">
-
-        <div>
-          <strong>Fingerprint</strong>
-          <p>Native authentication setup.</p>
-        </div>
-
-        <span class="settings-status pending">SETUP</span>
-
-      </div>
-
-      <button id="settingsLockBtn" class="primary-btn">
-        Lock Vault
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <!-- TOAST -->
-  <div id="toast" class="toast"></div>
-
-
-  <script type="module" src="/main.js"></script>
+<!-- APP LOCK SCREEN -->
+<section id="lockScreen" class="lock-screen">
+<div class="lock-glow"></div>
+<div class="lock-content">
+<div class="vault-logo">
+<div class="vault-logo-inner">
+<svg viewBox="0 0 24 24" fill="none">
+<rect x="4" y="3" width="16" height="18" rx="4" stroke="currentColor" stroke-width="1.7"/>
+<path d="M8 10V8.5a4 4 0 0 1 8 0V10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+<rect x="7" y="10" width="10" height="7" rx="2" stroke="currentColor" stroke-width="1.7"/>
+<circle cx="12" cy="13.5" r="1" fill="currentColor"/>
+</svg>
+</div>
+</div>
+<h1>Vault<span>X</span></h1>
+<p class="lock-subtitle">YOUR PERSONAL DOCUMENT VAULT</p>
+<div class="lock-card">
+<div id="pinHeading" class="lock-card-title">Create your PIN</div>
+<p id="pinDescription" class="lock-description">Create a 4-digit PIN to secure your documents.</p>
+<div class="pin-dots" id="pinDots">
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+</div>
+<div class="pin-keypad">
+<button class="pin-key" data-key="1">1</button>
+<button class="pin-key" data-key="2">2</button>
+<button class="pin-key" data-key="3">3</button>
+<button class="pin-key" data-key="4">4</button>
+<button class="pin-key" data-key="5">5</button>
+<button class="pin-key" data-key="6">6</button>
+<button class="pin-key" data-key="7">7</button>
+<button class="pin-key" data-key="8">8</button>
+<button class="pin-key" data-key="9">9</button>
+<button class="pin-key pin-empty" disabled></button>
+<button class="pin-key" data-key="0">0</button>
+<button class="pin-key pin-delete" data-key="delete">⌫</button>
+</div>
+<button id="fingerprintBtn" class="fingerprint-btn">
+<svg viewBox="0 0 24 24" fill="none">
+<path d="M12 11v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M8.5 13.5V11a3.5 3.5 0 0 1 7 0v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M5.5 12a6.5 6.5 0 0 1 13 0v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M12 17v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+<path d="M8 17c0 1.5-.5 2.5-1 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+</svg>
+<span>Fingerprint unlock</span>
+</button>
+<p id="pinMessage" class="pin-message"></p>
+</div>
+<p class="lock-footer">PRIVATE • OFFLINE • SECURE</p>
+</div>
+</section>
+
+<!-- MAIN APP -->
+<main id="mainApp" class="main-app hidden">
+
+<!-- HEADER -->
+<header class="app-header">
+<div class="brand">
+<div class="brand-icon">
+<svg viewBox="0 0 24 24" fill="none">
+<rect x="4" y="3" width="16" height="18" rx="4" stroke="currentColor" stroke-width="1.7"/>
+<path d="M8 10V8.5a4 4 0 0 1 8 0V10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+<rect x="7" y="10" width="10" height="7" rx="2" stroke="currentColor" stroke-width="1.7"/>
+</svg>
+</div>
+<div>
+<h1>Vault<span>X</span></h1>
+<p>Personal Document Locker</p>
+</div>
+</div>
+<button id="lockBtn" class="icon-btn" aria-label="Lock app">
+<svg viewBox="0 0 24 24" fill="none">
+<rect x="5" y="10" width="14" height="11" rx="3" stroke="currentColor" stroke-width="1.7"/>
+<path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+</svg>
+</button>
+</header>
+
+<!-- WELCOME -->
+<section class="welcome-section">
+<div>
+<p class="eyebrow">YOUR PRIVATE SPACE</p>
+<h2>
+Your documents.<br />
+<span>Your control.</span>
+</h2>
+<p class="welcome-description">Keep your important documents organized in one place.</p>
+</div>
+<div class="security-badge">
+<div class="security-dot"></div>
+<span>Offline Vault</span>
+</div>
+</section>
+
+<!-- SEARCH -->
+<section class="search-section">
+<div class="search-box">
+<svg viewBox="0 0 24 24" fill="none">
+<circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.7"/>
+<path d="m16 16 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+</svg>
+<input type="search" id="searchInput" placeholder="Search your documents..." autocomplete="off" />
+</div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="categories-section">
+<div class="section-heading">
+<h3>Categories</h3>
+<span id="categoryCount">5 categories</span>
+</div>
+<div class="category-grid">
+<button class="category-card active" data-category="All">
+<div class="category-icon all-icon"><span>▦</span></div>
+<span>All</span>
+<small id="allCount">0</small>
+</button>
+<button class="category-card" data-category="Identity">
+<div class="category-icon identity-icon"><span>▣</span></div>
+<span>Identity</span>
+<small id="identityCount">0</small>
+</button>
+<button class="category-card" data-category="Finance">
+<div class="category-icon finance-icon"><span>₹</span></div>
+<span>Finance</span>
+<small id="financeCount">0</small>
+</button>
+<button class="category-card" data-category="Education">
+<div class="category-icon education-icon"><span>▤</span></div>
+<span>Education</span>
+<small id="educationCount">0</small>
+</button>
+<button class="category-card" data-category="Other">
+<div class="category-icon other-icon"><span>▧</span></div>
+<span>Other</span>
+<small id="otherCount">0</small>
+</button>
+</div>
+</section>
+
+<!-- DOCUMENTS -->
+<section class="documents-section">
+<div class="section-heading">
+<div>
+<h3 id="documentsHeading">My Documents</h3>
+<p id="documentsSubheading">Your important files in one place</p>
+</div>
+<button id="sortBtn" class="sort-btn">Recent ↓</button>
+</div>
+<div id="documentGrid" class="document-grid"></div>
+<div id="emptyState" class="empty-state">
+<div class="empty-icon">▤</div>
+<h3>No documents yet</h3>
+<p>Add your first document to start building your personal vault.</p>
+<button id="emptyAddBtn" class="primary-btn">+ Add Document</button>
+</div>
+</section>
+
+<!-- FLOATING ADD BUTTON (NEW) -->
+<button id="fabAddBtn" class="fab-add" aria-label="Add document">+</button>
+
+<!-- BOTTOM NAVIGATION -->
+<nav class="bottom-nav">
+<button class="nav-item active" data-page="home">
+<span class="nav-icon">⌂</span>
+<span>Home</span>
+</button>
+<button class="nav-item" id="allDocumentsBtn">
+<span class="nav-icon">▤</span>
+<span>Documents</span>
+</button>
+<button class="nav-item" id="settingsBtn">
+<span class="nav-icon">⚙</span>
+<span>Settings</span>
+</button>
+</nav>
+
+</main>
+
+<!-- ADD DOCUMENT MODAL -->
+<div id="addModal" class="modal hidden">
+<div class="modal-backdrop" data-close="addModal"></div>
+<div class="modal-card">
+<div class="modal-header">
+<div>
+<h2>Add Document</h2>
+<p>Choose a file or scan with your camera.</p>
+</div>
+<button class="modal-close" data-close="addModal">×</button>
+</div>
+
+<label class="form-label" for="documentName">Document Name</label>
+<input id="documentName" class="form-input" type="text" placeholder="e.g. Aadhaar Card" maxlength="100" />
+
+<label class="form-label" for="documentCategory">Category</label>
+<select id="documentCategory" class="form-input">
+<option value="Identity">Identity</option>
+<option value="Finance">Finance</option>
+<option value="Education">Education</option>
+<option value="Other">Other</option>
+</select>
+
+<label class="form-label" for="documentExpiry">Expiry Date (Optional)</label>
+<input id="documentExpiry" class="form-input" type="date" />
+
+<label class="file-picker">
+<input type="file" id="documentFile" accept="image/*,.pdf" />
+<span class="file-picker-icon">＋</span>
+<span id="filePickerText">Choose PDF or Image</span>
+</label>
+
+<!-- SCANNER (NEW) -->
+<div class="scan-section">
+<div class="scan-heading">Or scan with camera (Front / Back)</div>
+<div class="scan-row">
+<button type="button" id="scanFrontBtn" class="scan-slot">
+<span class="scan-slot-icon">📷</span>
+<span id="scanFrontText">Scan Front</span>
+</button>
+<button type="button" id="scanBackBtn" class="scan-slot">
+<span class="scan-slot-icon">📷</span>
+<span id="scanBackText">Scan Back (optional)</span>
+</button>
+</div>
+<input type="file" id="scanCameraInput" accept="image/*" capture="environment" class="hidden" />
+</div>
+
+<button id="saveDocumentBtn" class="primary-btn" style="margin-top:20px;">Save Document</button>
+<p id="addDocumentMessage" class="form-message"></p>
+</div>
+</div>
+
+<!-- DOCUMENT PREVIEW MODAL -->
+<div id="previewModal" class="modal hidden">
+<div class="modal-backdrop" data-close="previewModal"></div>
+<div class="modal-card preview-card">
+<div class="modal-header">
+<div>
+<h2 id="previewTitle">Document</h2>
+<p id="previewInfo"></p>
+</div>
+<button class="modal-close" data-close="previewModal">×</button>
+</div>
+
+<div id="previewContent" class="preview-content"></div>
+
+<div class="preview-actions">
+<button id="downloadDocumentBtn" class="secondary-btn">Download</button>
+<button id="pdfDocumentBtn" class="secondary-btn">PDF</button>
+<button id="deleteDocumentBtn" class="danger-btn">Delete</button>
+</div>
+</div>
+</div>
+
+<!-- SETTINGS MODAL -->
+<div id="settingsModal" class="modal hidden">
+<div class="modal-backdrop" data-close="settingsModal"></div>
+<div class="modal-card">
+<div class="modal-header">
+<div>
+<h2>Settings</h2>
+<p>Manage your personal vault.</p>
+</div>
+<button class="modal-close" data-close="settingsModal">×</button>
+</div>
+
+<div class="settings-row">
+<div>
+<strong>Offline Storage</strong>
+<p>Your files stay on this device.</p>
+</div>
+<span class="settings-status">ON</span>
+</div>
+
+<div class="settings-row">
+<div>
+<strong>PIN Security</strong>
+<p>Change your vault PIN.</p>
+</div>
+<button id="changePinBtn" class="secondary-btn">Change PIN</button>
+</div>
+
+<div class="settings-row">
+<div>
+<strong>Fingerprint</strong>
+<p>Native authentication setup.</p>
+</div>
+<span class="settings-status pending">SETUP</span>
+</div>
+
+<!-- BACKUP / RESTORE (NEW) -->
+<div class="settings-row">
+<div>
+<strong>Encrypted Backup</strong>
+<p>Save all documents to a folder, locked with your password.</p>
+</div>
+<button id="backupBtn" class="secondary-btn">Backup</button>
+</div>
+
+<div class="settings-row">
+<div>
+<strong>Restore Backup</strong>
+<p>Bring documents back using your backup password.</p>
+</div>
+<button id="restoreBtn" class="secondary-btn">Restore</button>
+</div>
+
+<button id="settingsLockBtn" class="primary-btn">Lock Vault</button>
+</div>
+</div>
+
+<!-- BACKUP PASSWORD MODAL (NEW) -->
+<div id="passwordModal" class="modal hidden">
+<div class="modal-backdrop" data-close="passwordModal"></div>
+<div class="modal-card">
+<div class="modal-header">
+<div>
+<h2 id="passwordTitle">Backup Password</h2>
+<p id="passwordInfo"></p>
+</div>
+<button class="modal-close" data-close="passwordModal">×</button>
+</div>
+
+<label class="form-label" for="backupPassword">Backup Password</label>
+<input id="backupPassword" class="form-input" type="password" autocomplete="off" placeholder="Enter password" />
+
+<div id="confirmPasswordWrap">
+<label class="form-label" for="backupPasswordConfirm">Confirm Password</label>
+<input id="backupPasswordConfirm" class="form-input" type="password" autocomplete="off" placeholder="Enter password again" />
+</div>
+
+<button id="passwordConfirmBtn" class="primary-btn">Continue</button>
+<p id="passwordMessage" class="form-message"></p>
+</div>
+</div>
+
+<!-- CROP MODAL (NEW) -->
+<div id="cropModal" class="modal hidden">
+<div class="modal-backdrop"></div>
+<div class="modal-card crop-card">
+<div class="modal-header">
+<div>
+<h2 id="cropTitle">Crop Front Side</h2>
+<p>Drag the corners to remove extra area. Drag inside to move.</p>
+</div>
+<button id="cropCancelBtn" class="modal-close">×</button>
+</div>
+
+<div id="cropStage" class="crop-stage">
+<canvas id="cropCanvas"></canvas>
+</div>
+
+<div class="crop-actions">
+<button id="cropRotateBtn" class="secondary-btn">⟳ Rotate</button>
+<button id="cropResetBtn" class="secondary-btn">Reset</button>
+</div>
+
+<button id="cropDoneBtn" class="primary-btn">Use This Crop</button>
+</div>
+</div>
+
+<!-- TOAST -->
+<div id="toast" class="toast"></div>
+
+<script type="module" src="/main.js"></script>
 
 </body>
 </html>
