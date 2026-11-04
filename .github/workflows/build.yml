@@ -23,7 +23,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          
 
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -34,7 +33,7 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build web app with Vite
+      - name: Build web app
         run: npm run build
 
       - name: Add Android platform
@@ -43,7 +42,7 @@ jobs:
       - name: Sync Capacitor
         run: npx cap sync android
 
-      - name: Build debug APK
+      - name: Build APK
         run: |
           cd android
           chmod +x gradlew
