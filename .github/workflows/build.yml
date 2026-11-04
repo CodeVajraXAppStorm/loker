@@ -36,8 +36,24 @@ jobs:
       - name: Build web app
         run: npm run build
 
-      - name: Add Android platform
-        run: npx cap add android
+      - name: Keep native Java files, then add Android platform
+        run: |
+          mkdir -p /tmp/vaultx-native
+          if [ -d android/app/src/main/java ]; then
+            cp -r android/app/src/main/java/. /tmp/vaultx-native/
+          fi
+          rm -rf android
+          npx cap add android
+          if [ -n "$(ls -A /tmp/vaultx-native)" ]; then
+            cp -r /tmp/vaultx-native/. android/app/src/main/java/
+          fi
+
+      - name: Add camera and storage permissions, native libraries
+        run: |
+          MANIFEST=android/app/src/main/AndroidManifest.xml
+          sed -i 's#<application#<uses-permission android:name="android.permission.CAMERA" />\n    <uses-feature android:name="android.hardware.camera" android:required="false" />\n    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="28" />\n    <application#' "$MANIFEST"
+          printf '\ndependencies {\n    implementation "androidx.biometric:biometric:1.1.0"\n    implementation "androidx.documentfile:documentfile:1.0.1"\n}\n' >> android/app/build.gradle
+          grep -n "CAMERA" "$MANIFEST"
 
       - name: Sync Capacitor
         run: npx cap sync android
