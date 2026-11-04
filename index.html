@@ -163,7 +163,10 @@ Your documents.<br />
 <h3 id="documentsHeading">My Documents</h3>
 <p id="documentsSubheading">Your important files in one place</p>
 </div>
+<div style="display:flex;gap:8px;align-items:center;">
+<button id="headerAddBtn" class="sort-btn">+ Add</button>
 <button id="sortBtn" class="sort-btn">Recent ↓</button>
+</div>
 </div>
 <div id="documentGrid" class="document-grid"></div>
 <div id="emptyState" class="empty-state">
@@ -175,7 +178,7 @@ Your documents.<br />
 </section>
 
 <!-- FLOATING ADD BUTTON (NEW) -->
-<button id="fabAddBtn" class="fab-add" aria-label="Add document">+</button>
+<button id="fabAddBtn" class="fab-add" aria-label="Add document" style="position:fixed;z-index:60;right:18px;bottom:calc(96px + env(safe-area-inset-bottom));width:56px;height:56px;border:none;border-radius:18px;color:#fff;font-size:30px;line-height:1;background:linear-gradient(120deg,#6678ff,#9371ff);box-shadow:0 10px 30px rgba(105,118,255,.35);">+</button>
 
 <!-- BOTTOM NAVIGATION -->
 <nav class="bottom-nav">
@@ -221,15 +224,9 @@ Your documents.<br />
 <label class="form-label" for="documentExpiry">Expiry Date (Optional)</label>
 <input id="documentExpiry" class="form-input" type="date" />
 
-<label class="file-picker">
-<input type="file" id="documentFile" accept="image/*,.pdf" />
-<span class="file-picker-icon">＋</span>
-<span id="filePickerText">Choose PDF or Image</span>
-</label>
-
 <!-- SCANNER (NEW) -->
 <div class="scan-section">
-<div class="scan-heading">Or scan with camera (Front / Back)</div>
+<div class="scan-heading">Scan with camera (Front / Back)</div>
 <div class="scan-row">
 <button type="button" id="scanFrontBtn" class="scan-slot">
 <span class="scan-slot-icon">📷</span>
@@ -242,6 +239,14 @@ Your documents.<br />
 </div>
 <input type="file" id="scanCameraInput" accept="image/*" capture="environment" class="hidden" />
 </div>
+
+<div class="scan-heading" style="margin-top:14px;">Or choose an existing file</div>
+
+<label class="file-picker">
+<input type="file" id="documentFile" accept="image/*,.pdf" />
+<span class="file-picker-icon">＋</span>
+<span id="filePickerText">Choose PDF or Image</span>
+</label>
 
 <button id="saveDocumentBtn" class="primary-btn" style="margin-top:20px;">Save Document</button>
 <p id="addDocumentMessage" class="form-message"></p>
@@ -262,9 +267,10 @@ Your documents.<br />
 
 <div id="previewContent" class="preview-content"></div>
 
-<div class="preview-actions">
+<div class="preview-actions" style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;">
 <button id="downloadDocumentBtn" class="secondary-btn">Download</button>
 <button id="pdfDocumentBtn" class="secondary-btn">PDF</button>
+<button id="shareDocumentBtn" class="secondary-btn">Share</button>
 <button id="deleteDocumentBtn" class="danger-btn">Delete</button>
 </div>
 </div>
@@ -352,6 +358,22 @@ Your documents.<br />
 </div>
 </div>
 
+<!-- SHARE MODAL (NEW) -->
+<div id="shareModal" class="modal hidden">
+<div class="modal-backdrop" data-close="shareModal"></div>
+<div class="modal-card">
+<div class="modal-header">
+<div>
+<h2>Share Document</h2>
+<p>Choose how you want to send it.</p>
+</div>
+<button class="modal-close" data-close="shareModal">×</button>
+</div>
+<button id="shareAsPdfBtn" class="primary-btn">Share as PDF</button>
+<button id="shareAsImageBtn" class="secondary-btn" style="width:100%;margin-top:12px;min-height:48px;">Share as Image</button>
+</div>
+</div>
+
 <!-- CROP MODAL (NEW) -->
 <div id="cropModal" class="modal hidden">
 <div class="modal-backdrop"></div>
@@ -368,9 +390,10 @@ Your documents.<br />
 <canvas id="cropCanvas"></canvas>
 </div>
 
-<div class="crop-actions">
-<button id="cropRotateBtn" class="secondary-btn">⟳ Rotate</button>
-<button id="cropResetBtn" class="secondary-btn">Reset</button>
+<div class="crop-actions" style="display:flex;gap:8px;margin:14px 0;">
+<button id="cropRotateBtn" class="secondary-btn" style="flex:1;">⟳ Rotate</button>
+<button id="cropResetBtn" class="secondary-btn" style="flex:1;">Reset</button>
+<button id="cropSkipBtn" class="secondary-btn" style="flex:1;">Full Photo</button>
 </div>
 
 <button id="cropDoneBtn" class="primary-btn">Use This Crop</button>
