@@ -378,4 +378,83 @@ public class VaultNativePlugin extends Plugin {
             call.reject("Save failed: " + e.getMessage());
         }
     }
+
+    // ---------------------------------------------------------
+    // "Save as" - the phone's own file dialog opens so the user
+    // can pick the folder (Downloads, Documents, SD card, ...)
+    // ---------------------------------------------------------
+    @PluginMethod
+    public void saveFileAs(PluginCall call) {
+        String fileName = call.getString("fileName");
+        String mimeType = call.getString("mimeType");
+        String data = call.getString("data");
+
+        if (fileName == null || data == null) {
+            call.reject("Missing file information");
+            return;
+        }
+
+        if (mimeType == null) {
+            mimeType = "application/octet-stream";
+        }
+
+        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType(mimeType);
+        intent.putExtra(Intent.EXTRA_TITLE, fileName);
+
+        startActivityForResult(
+                call,
+                intent,
+                "saveFileResult"
+        );
+    }
+
+    @ActivityCallback
+    private void saveFileResult(
+            PluginCall call,
+            ActivityResult result) {
+
+        if (call == null) {
+            return;
+        }
+
+        if (result.getResultCode() != Activity.RESULT_OK
+                || result.getData() == null
+                || result.getData().getData() == null) {
+            call.reject("Save cancelled");
+            return;
+        }
+
+        try {
+            Uri uri = result.getData().getData();
+
+            byte[] bytes = android.util.Base64.decode(
+                    call.getString("data"),
+                    android.util.Base64.DEFAULT
+            );
+
+            OutputStream output = getContext()
+                    .getContentResolver()
+                    .openOutputStream(uri);
+
+            if (output == null) {
+                call.reject("Could not open the selected location");
+                return;
+            }
+
+            output.write(bytes);
+            output.flush();
+            output.close();
+
+            JSObject response = new JSObject();
+            response.put("success", true);
+            response.put("uri", uri.toString());
+
+            call.resolve(response);
+
+        } catch (Exception e) {
+            call.reject("Save failed: " + e.getMessage());
+        }
+    }
 }
