@@ -39,7 +39,8 @@ public class VaultNativePlugin extends Plugin {
 
     @PluginMethod
     public void authenticate(PluginCall call) {
-        Activity activity = getActivity();
+        androidx.fragment.app.FragmentActivity activity =
+                (androidx.fragment.app.FragmentActivity) getActivity();
 
         BiometricManager manager = BiometricManager.from(activity);
 
